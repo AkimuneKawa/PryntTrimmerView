@@ -228,7 +228,6 @@ public protocol TrimmerViewDelegate: class {
             updateLeftConstraint(with: translation)
             layoutIfNeeded()
             seek(to: startTime!)
-            seek(to: endTime!)
             updateSelectedTime(stoppedMoving: false)
         case .cancelled, .ended, .failed:
             updateSelectedTime(stoppedMoving: true)
@@ -279,8 +278,7 @@ public protocol TrimmerViewDelegate: class {
     
     /// The selected end time for the current asset.
     public var endTime: CMTime? {
-        let endPosition = rightHandleView.frame.origin.x + assetPreview.contentOffset.x - sideMargin
-        return getTime(from: endPosition)
+        return CMTimeMinimum(startTime! + CMTime(seconds: trimDurationSec, preferredTimescale: 100), asset!.duration)
     }
     
     private func updateSelectedTime(stoppedMoving: Bool) {
@@ -301,7 +299,7 @@ public protocol TrimmerViewDelegate: class {
     
     private var distanceBetweenHandle: CGFloat {
         guard let asset = asset else { return 0 }
-        return min( 1, CGFloat(trimDurationSec) / CGFloat(asset.duration.seconds) ) * assetPreview.contentView.frame.width
+        return min(assetPreview.contentView.frame.width, getPosition(from: CMTime(seconds: trimDurationSec, preferredTimescale: 100))!)
     }
     
     // MARK: - Scroll View Delegate
