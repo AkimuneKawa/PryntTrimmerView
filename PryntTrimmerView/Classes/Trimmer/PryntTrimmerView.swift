@@ -73,7 +73,7 @@ public protocol TrimmerViewDelegate: class {
     /// The duration allowed for the trimming.
     public var trimDurationSec: Double = 15 {
         didSet {
-            assetPreview.trimDurationSec = trimDurationSec
+            assetPreview.trimDurationSec = trimDurationSec * 4.0
         }
     }
     
@@ -155,7 +155,7 @@ public protocol TrimmerViewDelegate: class {
     private func setupMaskView() {
         
         leftMaskView.isUserInteractionEnabled = false
-        leftMaskView.backgroundColor = .white
+        leftMaskView.backgroundColor = .black
         leftMaskView.alpha = 0.7
         leftMaskView.translatesAutoresizingMaskIntoConstraints = false
         insertSubview(leftMaskView, belowSubview: leftHandleView)
@@ -166,7 +166,7 @@ public protocol TrimmerViewDelegate: class {
         leftMaskView.rightAnchor.constraint(equalTo: leftHandleView.centerXAnchor).isActive = true
         
         rightMaskView.isUserInteractionEnabled = false
-        rightMaskView.backgroundColor = .white
+        rightMaskView.backgroundColor = .black
         rightMaskView.alpha = 0.7
         rightMaskView.translatesAutoresizingMaskIntoConstraints = false
         insertSubview(rightMaskView, belowSubview: rightHandleView)
