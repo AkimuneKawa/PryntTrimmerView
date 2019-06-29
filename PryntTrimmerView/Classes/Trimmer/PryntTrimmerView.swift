@@ -252,6 +252,7 @@ public protocol TrimmerViewDelegate: class {
     public func resetHandleViewPosition() {
         leftConstraint?.constant = sideMargin
         rightConstraint?.constant = distanceBetweenHandle
+        self.assetPreview.setContentOffset(CGPoint.zero, animated: false)
         layoutIfNeeded()
     }
     
