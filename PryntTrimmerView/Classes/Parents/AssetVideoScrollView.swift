@@ -70,12 +70,17 @@ class AssetVideoScrollView: UIScrollView {
     private func getThumbnailFrameSize(from asset: AVAsset) -> CGSize? {
         guard let track = asset.tracks(withMediaType: AVMediaType.video).first else { return nil}
         
-        let assetSize = track.naturalSize.applying(track.preferredTransform)
-        
+        let assetSize = track.naturalSize
         let height = frame.height
         let ratio = assetSize.width / assetSize.height
         let width = height * ratio
-        return CGSize(width: abs(width), height: abs(height))
+        
+        let transform = track.preferredTransform
+        if transform.a == 0.0 {
+            return CGSize(width: abs(height), height: abs(width))
+        } else {
+            return CGSize(width: abs(width), height: abs(height))
+        }
     }
     
     private func removeFormerThumbnails() {
